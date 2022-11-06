@@ -8,7 +8,7 @@
 // The time keeping limit is the Max value of uint32_t.
 // Actual overflow hapens at 49 days, 17 hours, 2 minutes, 47 seconds and 295 miliseconds
 // To have some safety buffer, overflow is triggerd at 49 days (17 hours before it actualy occurs.)
-#define OVERFLOW_VALUE 4233600000   //49 days in milliseconds
+#define OVERFLOW_VALUE 4233600000   //49 days in milliseconds 
 
 enum class tmrState : char{
   overflow = -1,
