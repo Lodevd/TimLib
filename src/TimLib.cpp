@@ -123,6 +123,10 @@ bool OnDelayTimerMs::run(bool trigger, uint32_t delayTime_ms){
   return this->run(trigger);
 }
 
+void OnDelayTimerMs::restart(){
+  TimerMs::restart(); 
+}
+
 // ********************************
 // OffDelayTimerMs
 // ********************************
@@ -152,6 +156,10 @@ bool OffDelayTimerMs::run(bool trigger){
 bool OffDelayTimerMs::run(bool trigger, uint32_t delayTime_ms){
   this->delayTime_ms = delayTime_ms;
   return this->run(trigger);
+}
+
+void OffDelayTimerMs::stop(){
+  TimerMs::stop();
 }
 
 // ********************************
@@ -186,6 +194,10 @@ bool PulseTimer::run(bool trigger){
 bool PulseTimer::run(bool trigger, uint32_t pulseTime_ms){
   this->pulseTime_ms = pulseTime_ms;
   return this->run(trigger);
+}
+
+void PulseTimer::stop(){
+  TimerMs::stop();
 }
 
 // ********************************

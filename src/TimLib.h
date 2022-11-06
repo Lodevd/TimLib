@@ -59,6 +59,7 @@ class OnDelayTimerMs : private TimerMs{
     OnDelayTimerMs(uint32_t delayTime_ms);
     bool run(bool trigger);
     bool run(bool trugger, uint32_t delayTime_ms);
+    void restart();       // Restart the delay timer. 
 };
 
 // The timer will be ready (return true) while running (trigger = true) and during the delay after. 
@@ -71,6 +72,7 @@ class OffDelayTimerMs : private TimerMs{
     OffDelayTimerMs(uint32_t delayTime_ms);
     bool run(bool trigger);
     bool run(bool trigger, uint32_t delayTime_ms);
+    void stop();        // Early stop (return false) of the timer. 
 };
 
 // The timer will give a fixed length pulse starting on the positive edge of the trigger signal. 
@@ -85,6 +87,7 @@ class PulseTimer : private TimerMs{
     PulseTimer(uint32_t pulseTime_ms);
     bool run(bool trigger);
     bool run(bool trigger, uint32_t pulseTime_ms);
+    void stop();    // Early stopping the pulse signal. 
 };
 
 // The timer timer will give an output (return true) while its running. 
