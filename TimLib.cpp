@@ -1,5 +1,4 @@
-
-#include <TimLib.h>
+#include "TimLib.h"
 
 // ********************************
 // TimerMs
@@ -307,6 +306,7 @@ uint32_t CycleTimer::lap(){
   if(_lastTime > _maxTime){
     _maxTime = _lastTime;
   }
+  return _lastTime;
 }
 
 uint32_t CycleTimer::maxTime(){
