@@ -2,3 +2,5 @@
 .vscode
 platformio.ini
 .gitignore
+library.json
+
