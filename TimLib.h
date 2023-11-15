@@ -141,16 +141,20 @@ class LapTimer : private TimerMs{
 
 /**
  * @brief An extension of LapTimer. 
- * It keeps track of the last and maximum duration of a repeating cycle. For example loop(). 
+ * It keeps track of the last and maximum duration of a repeating cycle. For example loop().
+ * 
  */
-class CycleTimer : private LapTimer{
+class CycleTimer{
   private:
-    uint32_t _maxTime;
-    uint32_t _lastTime;
+
+    uint32_t max;
+    uint32_t last;
+    uint32_t timeRef;
 
   public:
     CycleTimer();
-    uint32_t lap();       //returns the passed time since the previous call. 
+    void cycleTriger();   //call this at the start of each cycle.
+    void reset();         //reset the timer
     uint32_t maxTime();   //returns the maximum measured cycle time
     uint32_t lastTime();  //returns the last measured cycle time
 };

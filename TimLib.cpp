@@ -296,25 +296,45 @@ uint32_t LapTimer::lap(){
 // CycleTimer
 // ********************************
 
-CycleTimer::CycleTimer() : LapTimer(){
-  _lastTime = 0;
-  _maxTime = 0;
+CycleTimer::CycleTimer(){
+  reset();
 }
 
-uint32_t CycleTimer::lap(){
-  _lastTime = LapTimer::lap();
-  if(_lastTime > _maxTime){
-    _maxTime = _lastTime;
+void CycleTimer::reset(){         //reset the timer
+    max = UINT32_MAX;
+    last = 0;
+}
+
+void CycleTimer::cycleTriger(){   //call this at the start of each cycle.
+    
+  //time now
+  uint32_t tn = millis();
+
+  // calculate elapsed time
+  // while running timeRef holds the millis() whe the timer started.
+  uint32_t et = (tn >= timeRef) ? (tn - timeRef) : ((UINT32_MAX - timeRef) + tn);
+
+  //Store time reference
+  timeRef = tn;
+
+  //First time, ony store timer reference value, do not store values.
+  if(max == UINT32_MAX){
+    max = 0;
+    return;
   }
-  return _lastTime;
+
+  //Store values
+  last = et;
+  if(et > max) max = et;
+
 }
 
 uint32_t CycleTimer::maxTime(){
-  return _maxTime;
+  return max;
 }
 
 uint32_t CycleTimer::lastTime(){
-  return _lastTime;
+  return last;
 }
 
 // ********************************
