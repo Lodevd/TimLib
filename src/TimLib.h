@@ -50,26 +50,26 @@ class TimerMs {
 // The timer will be ready (return true) after the delay has passed.
 // The delays starts when then trigger input is high. 
 // When the trigger input falls to False, the delay time is reset to 0ms. (Will need to start all over.) 
-class OnDelayTimerMs : private TimerMs{
+class OnDelayTimer : private TimerMs{
   private:
     uint32_t delayTime_ms;
 
   public:
-    OnDelayTimerMs();
-    OnDelayTimerMs(uint32_t delayTime_ms);
+    OnDelayTimer();
+    OnDelayTimer(uint32_t delayTime_ms);
     bool run(bool trigger);
     bool run(bool trugger, uint32_t delayTime_ms);
     void restart();       // Restart the delay timer. 
 };
 
 // The timer will be ready (return true) while running (trigger = true) and during the delay after. 
-class OffDelayTimerMs : private TimerMs{
+class OffDelayTimer : private TimerMs{
   private:
     uint32_t delayTime_ms;
 
   public:
-    OffDelayTimerMs();
-    OffDelayTimerMs(uint32_t delayTime_ms);
+    OffDelayTimer();
+    OffDelayTimer(uint32_t delayTime_ms);
     bool run(bool trigger);
     bool run(bool trigger, uint32_t delayTime_ms);
     void stop();        // Early stop (return false) of the timer. 

@@ -3,8 +3,8 @@
 
 bool buttonPushed;
 bool memoButtonPushed;
-OnDelayTimerMs ondt(5000);          //setpoint 5s.
-OffDelayTimerMs offdt(5000);        //setpoint 5s.
+OnDelayTimer ondt(5000);          //setpoint 5s.
+OffDelayTimer offdt(5000);        //setpoint 5s.
 PulseTimer plst(5000);              //setpoint 5s.
 IntervalTimer intt(5000);           //setpoint 5s.
 LapTimer lpt;

@@ -94,18 +94,18 @@ tmrState TimerMs::state (){
 }
 
 // ********************************
-// OnDelayTimerMs
+// OnDelayTimer
 // ********************************
 
-OnDelayTimerMs::OnDelayTimerMs() : TimerMs(){
+OnDelayTimer::OnDelayTimer() : TimerMs(){
   
 }
 
-OnDelayTimerMs::OnDelayTimerMs(uint32_t delayTime_ms) : OnDelayTimerMs(){
+OnDelayTimer::OnDelayTimer(uint32_t delayTime_ms) : OnDelayTimer(){
   this->delayTime_ms = delayTime_ms;
 }
 
-bool OnDelayTimerMs::run(bool trigger){
+bool OnDelayTimer::run(bool trigger){
   if(trigger){
     start();  //this only starts the timer when it is not already running. 
     if(elapsedTime() >= delayTime_ms){
@@ -117,30 +117,30 @@ bool OnDelayTimerMs::run(bool trigger){
   return (state() == tmrState::ready);
 }
 
-bool OnDelayTimerMs::run(bool trigger, uint32_t delayTime_ms){
+bool OnDelayTimer::run(bool trigger, uint32_t delayTime_ms){
   this->delayTime_ms = delayTime_ms;
   return this->run(trigger);
 }
 
-void OnDelayTimerMs::restart(){
+void OnDelayTimer::restart(){
   TimerMs::restart(); 
 }
 
 // ********************************
-// OffDelayTimerMs
+// OffDelayTimer
 // ********************************
 
-OffDelayTimerMs::OffDelayTimerMs() : TimerMs(){
+OffDelayTimer::OffDelayTimer() : TimerMs(){
   // To prevent the timer from starting on program startup the timer is put imediatly in ready state.
   restart();
   ready();
 }
 
-OffDelayTimerMs::OffDelayTimerMs(uint32_t delayTime_ms) : OffDelayTimerMs(){
+OffDelayTimer::OffDelayTimer(uint32_t delayTime_ms) : OffDelayTimer(){
   this->delayTime_ms = delayTime_ms;
 }
 
-bool OffDelayTimerMs::run(bool trigger){
+bool OffDelayTimer::run(bool trigger){
   if(!trigger){
     start();  //this only starts the timer when it is not already running. 
     if(elapsedTime() >= delayTime_ms){
@@ -152,12 +152,12 @@ bool OffDelayTimerMs::run(bool trigger){
   return trigger | (state() == tmrState::running);
 }
 
-bool OffDelayTimerMs::run(bool trigger, uint32_t delayTime_ms){
+bool OffDelayTimer::run(bool trigger, uint32_t delayTime_ms){
   this->delayTime_ms = delayTime_ms;
   return this->run(trigger);
 }
 
-void OffDelayTimerMs::stop(){
+void OffDelayTimer::stop(){
   TimerMs::stop();
 }
 
@@ -272,7 +272,7 @@ bool IntervalTimer::run(bool trigger, uint32_t intervalTime_ms){
 }
 
 bool IntervalTimer::run(){
-  run(true);
+  return run(true);
 }
 
 // ********************************
