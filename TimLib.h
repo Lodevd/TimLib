@@ -125,6 +125,7 @@ class IntervalTimer : private TimerMs{
     IntervalTimer(uint32_t intervalTime_ms);
     bool run(bool trigger);
     bool run(bool trigger, uint32_t intervalTime_ms);
+    bool run();
 };
 
 /**

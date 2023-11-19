@@ -271,6 +271,10 @@ bool IntervalTimer::run(bool trigger, uint32_t intervalTime_ms){
   return this->run(trigger);
 }
 
+bool IntervalTimer::run(){
+  run(true);
+}
+
 // ********************************
 // LapTimer
 // ********************************
