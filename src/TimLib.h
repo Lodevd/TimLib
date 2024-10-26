@@ -10,12 +10,12 @@
 // To have some safety buffer, overflow is triggerd at 49 days (17 hours before it actualy occurs.)
 #define OVERFLOW_VALUE 4233600000   //49 days in milliseconds 
 
-enum class tmrState : char{
-  overflow = -1,
+enum class tmrState : uint8_t{
   idle = 0,
   paused = 1,
   running = 2,
-  ready = 3
+  ready = 3,
+  overflow = 10
 };
 
 // Base timer in milliseconds.
