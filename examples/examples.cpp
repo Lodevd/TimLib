@@ -10,6 +10,14 @@ IntervalTimer intt(5000);           //setpoint 5s.
 LapTimer lpt;
 StopWatch stpw;
 
+#ifndef LED_BUILTIN
+  #define LED_BUILTIN 13
+#endif
+
+#ifndef PIN2
+  #define PIN2 2
+#endif
+
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(PIN2, INPUT_PULLUP);      //button connected from pin 2 to GND
