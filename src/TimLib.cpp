@@ -27,7 +27,7 @@ uint32_t TimerMs::elapsedTime(){
 
     // calculate elapsed time
     // while running timeRef holds the millis() whe the timer started.
-    uint32_t et = (tn >= timeRef) ? (tn - timeRef) : ((UINT32_MAX - timeRef) + tn);
+    uint32_t et = tn - timeRef;
     
     // handle overflow
     if(et > OVERFLOW_VALUE){
@@ -211,33 +211,25 @@ PauseTimer::PauseTimer(uint32_t setpointTime_ms) : PauseTimer(){
   this->setpointTime_ms = setpointTime_ms;
 }
 
-void PauseTimer::setpoint(uint32_t setpointTime_ms){
+bool PauseTimer::run(bool trigger){
+  if(trigger){
+    start();  //this only starts the timer when it is not already running. 
+    if(elapsedTime() >= setpointTime_ms){
+      ready();  //Stop the timer from running, go to ready state
+    }
+  }else{
+    pause(); //Pause the timer from running
+  }
+  return (state() == tmrState::ready);
+}
+
+bool PauseTimer::run(bool trigger, uint32_t setpointTime_ms){
   this->setpointTime_ms = setpointTime_ms;
+  return this->run(trigger);
 }
 
-void PauseTimer::start(){
-  TimerMs::start();  //this only starts the timer when it is not already running. 
-}
-
-void PauseTimer::start(uint32_t setpointTime_ms){
-  this->setpointTime_ms = setpointTime_ms;
-  this->start();
-}
-
-void PauseTimer::pause(){
-  TimerMs::pause();
-}
-
-void PauseTimer::stop(){
-  TimerMs::stop();
-}
-
-bool PauseTimer::running(){
-  return (state() == tmrState::running);
-}
-
-PauseTimer::operator bool(){
-  return running();
+void PauseTimer::reset(){
+  stop();
 }
 
 // ********************************
@@ -305,31 +297,17 @@ CycleTimer::CycleTimer(){
 }
 
 void CycleTimer::reset(){         //reset the timer
-    max = UINT32_MAX;
+    max = 0;
     last = 0;
 }
 
 void CycleTimer::cycleTriger(){   //call this at the start of each cycle.
-    
-  //time now
-  uint32_t tn = millis();
 
-  // calculate elapsed time
-  // while running timeRef holds the millis() whe the timer started.
-  uint32_t et = (tn >= timeRef) ? (tn - timeRef) : ((UINT32_MAX - timeRef) + tn);
-
-  //Store time reference
-  timeRef = tn;
-
-  //First time, ony store timer reference value, do not store values.
-  if(max == UINT32_MAX){
-    max = 0;
-    return;
-  }
+  // Elapsed time
+  uint32_t last = lap();
 
   //Store values
-  last = et;
-  if(et > max) max = et;
+  if(last > max){ max = last; }
 
 }
 

@@ -90,12 +90,10 @@ class PulseTimer : private TimerMs{
     void stop();    // Early stopping the pulse signal. 
 };
 
-// The timer timer will give an output (return true) while its running. 
-// It is not comamnded by a trigger signal but by commands. 
-// The commands are Start, Pause, Stop.
-// During pause the timer will return fasle. 
-// Changing the setpoint when the timer is runing can be done using the setpoint() function.
-// Changing the setpoint shorter then the already elapsed time while the timer is paused state will not make it ready until the timer is started again. 
+// The timer runs while the run trigger is high. 
+// When the trigger is false the timer pauses and continues when the trigger is high again. 
+// When the timer reaches the setpoint it stops timing and returns true. 
+// The timer keeps returning true until it receives a reset command. 
 class PauseTimer : private TimerMs{
   private:
     uint32_t setpointTime_ms;
@@ -103,13 +101,9 @@ class PauseTimer : private TimerMs{
   public:
     PauseTimer();
     PauseTimer(uint32_t setpointTime_ms);
-    void setpoint(uint32_t setpointTime_ms);
-    void start();
-    void start(uint32_t setpointTime_ms);
-    void pause();
-    void stop();
-    bool running();
-    operator bool();      // returns running();
+    bool run(bool trigger);
+    bool run(bool trigger, uint32_t setpointTime_ms);
+    void reset();
 };
 
 /**
@@ -145,12 +139,11 @@ class LapTimer : private TimerMs{
  * It keeps track of the last and maximum duration of a repeating cycle. For example loop().
  * 
  */
-class CycleTimer{
+class CycleTimer : private LapTimer{
   private:
 
-    uint32_t max;
-    uint32_t last;
-    uint32_t timeRef;
+    uint32_t max = 0;
+    uint32_t last = 0;
 
   public:
     CycleTimer();
