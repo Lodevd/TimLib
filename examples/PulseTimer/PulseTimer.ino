@@ -18,8 +18,8 @@
 
 bool buttonPushed();
 
-// Create an instance of an on delay timer, with 5000ms delay. 
-PulseTimer  pt(5000);     // On delay time setpoint set to 5000ms.
+// Create an instance of an pulse timer, with 5000ms delay. 
+PulseTimer  pt(5000);     // Pulse time setpoint set to 5000ms.
 // PulseTimer  pt;        // No initial setpoint. 
 
 void setup() {

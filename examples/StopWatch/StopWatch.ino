@@ -29,26 +29,28 @@ void setup() {
   // Serial to output the measured times. 
   Serial.begin(9600);
 
+  // Start the stopwatch 
+  sw.restart();
+
 }
 
 void loop() {
   
   bool bp = buttonPushed();
 
-  // Print the time the button was pushed. 
-  // Because there is no button debounse handeling there might be more prints then you expect.
-  if(!previousButtonPushed & bp){
-    // Positive edge, start the stopwatch
-    sw.restart();
-  }
-  else if(previousButtonPushed & !bp){
-    // negative edge, print elapsed time and stop the stopwatch
+  if(previousButtonPushed & !bp){
+    // Negative edge, print elapsed time since start.
+    // Because there is no button debounse handeling there might be more prints then you expect.
     Serial.println(sw.watch());
-    sw.stop();
+    
   }
   previousButtonPushed = bp;
 
-  // In this example there is a singel output. But you can watch multiple times between (re)start and stop. 
+  // if you should want to stop te stopwatch 
+  // sw.stop();
+
+  // Or restart
+  // sw.restart();
 
 }
 
